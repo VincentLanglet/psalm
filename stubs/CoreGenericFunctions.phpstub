@@ -687,19 +687,33 @@ function rtrim(string $string, string $characters = " \t\n\r\0\x0B") : string {}
  * @param array<string|float|int|stringable-object|null|bool> $array
  *
  * @return (
- *     $separator is non-empty-string
- *     ? ($array is non-empty-array
+ *     $separator is non-empty-literal-string
+ *     ? ($array is array<literal-string|literal-int>
+ *         ? ($array is non-empty-array ? non-empty-literal-string : literal-string)
+ *         : ($array is non-empty-array<non-falsy-string>
+ *             ? non-falsy-string
+ *             : ($array is non-empty-array ? non-empty-string : string)
+ *         )
+ *     )
+ *     : ($separator is literal-string
  *         ? ($array is array<literal-string|literal-int>
- *             ? ($separator is literal-string ? non-empty-literal-string : non-empty-string)
- *             : non-empty-string
+ *             ? ($array is non-empty-array<non-empty-string> ? non-empty-literal-string : literal-string)
+ *             :  ($array is non-empty-array<non-falsy-string>
+ *                  ? non-falsy-string
+ *                  : ($array is non-empty-array<non-empty-string> ? non-empty-string : string)
+ *             )
  *         )
- *         : string)
- *     : ($array is non-empty-array
- *         ? ($array is array<non-empty-literal-string|non-empty-string>
- *             ? ($array is array<non-empty-literal-string> ? non-empty-literal-string : non-empty-string)
- *             : string
+ *         : ($separator is non-falsy-string
+ *             ? ($array is non-empty-array ? non-falsy-string : string)
+ *             : ($separator is non-empty-string
+ *                 ? ($array is non-empty-array ? non-empty-string : string)
+ *                 : ($array is non-empty-array
+ *                     ? ($array is array<non-empty-literal-string|non-empty-string> ? non-empty-string : string)
+ *                     : string
+ *                 )
+ *             )
  *         )
- *         : string)
+ *     )
  * )
  *
  * @psalm-flow ($separator) -> return
@@ -714,19 +728,33 @@ function implode($separator, array $array = []) : string {}
  * @param array<string|float|int|stringable-object|null|bool> $array
  *
  * @return (
- *     $separator is non-empty-string
- *     ? ($array is non-empty-array
+ *     $separator is non-empty-literal-string
+ *     ? ($array is array<literal-string|literal-int>
+ *         ? ($array is non-empty-array ? non-empty-literal-string : literal-string)
+ *         : ($array is non-empty-array<non-falsy-string>
+ *             ? non-falsy-string
+ *             : ($array is non-empty-array ? non-empty-string : string)
+ *         )
+ *     )
+ *     : ($separator is literal-string
  *         ? ($array is array<literal-string|literal-int>
- *             ? ($separator is literal-string ? non-empty-literal-string : non-empty-string)
- *             : non-empty-string
+ *             ? ($array is non-empty-array<non-empty-string> ? non-empty-literal-string : literal-string)
+ *             :  ($array is non-empty-array<non-falsy-string>
+ *                  ? non-falsy-string
+ *                  : ($array is non-empty-array<non-empty-string> ? non-empty-string : string)
+ *             )
  *         )
- *         : string)
- *     : ($array is non-empty-array
- *         ? ($array is array<non-empty-literal-string|non-empty-string>
- *             ? ($array is array<non-empty-literal-string> ? non-empty-literal-string : non-empty-string)
- *             : string
+ *         : ($separator is non-falsy-string
+ *             ? ($array is non-empty-array ? non-falsy-string : string)
+ *             : ($separator is non-empty-string
+ *                 ? ($array is non-empty-array ? non-empty-string : string)
+ *                 : ($array is non-empty-array
+ *                     ? ($array is array<non-empty-literal-string|non-empty-string> ? non-empty-string : string)
+ *                     : string
+ *                 )
+ *             )
  *         )
- *         : string)
+ *     )
  * )
  *
  * @psalm-flow ($separator) -> return
